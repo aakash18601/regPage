@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EQUIP9</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        .container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="welcome" id="welcomeMessage"></div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+    
+    <div class="container">
+        
+    </div>
+
+    <script>
+        
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+
+        const user = JSON.parse(localStorage.getItem('user'));
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        
+        function getGreeting() {
+            const hour = new Date().getHours();
+            if (hour < 12) return 'Good Morning';
+            if (hour < 18) return 'Good Afternoon';
+            return 'Good Evening';
+        }
+
+        welcomeMessage.textContent = `${getGreeting()}, ${user.first_name} ${user.last_name}`;
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>
